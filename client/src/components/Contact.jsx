@@ -40,10 +40,20 @@ export default function Contact() {
     setSending(true);
     setStatus('');
     try {
-      const res = await fetch(`${API_URL}/api/contact`, {
+      // FormSubmit API completely bypasses Render/SMTP blocks instantly
+      const res = await fetch(`https://formsubmit.co/ajax/harshvardhanjha338@gmail.com`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `Portfolio Contact: Message from ${form.name}`,
+          _template: 'box'
+        }),
       });
       if (res.ok) {
         setStatus('success');
