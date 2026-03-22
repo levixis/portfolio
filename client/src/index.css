@@ -1,0 +1,43 @@
+:root {
+  --text: #5a5a5a;
+  --text-h: #2c2c2c;
+  --bg: #f0ede5;
+  --border: rgba(44, 44, 44, 0.1);
+  --accent: #b8a9c9;
+  --accent-bg: rgba(184, 169, 201, 0.15);
+
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'DM Serif Display', Georgia, serif;
+
+  font: 16px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1, h2 {
+  font-family: var(--heading);
+  font-weight: 400;
+  color: var(--text-h);
+}
+
+p {
+  margin: 0;
+}
