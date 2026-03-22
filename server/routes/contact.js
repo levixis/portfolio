@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
 
-// POST /api/contact - Save a new contact message
+// POST /api/contact - Send contact message via email
 router.post('/', async (req, res) => {
   try {
     const { name, email, message } = req.body;
@@ -11,9 +10,6 @@ router.post('/', async (req, res) => {
     if (!name || !email || !message) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-
-    const contact = new Contact({ name, email, message });
-    await contact.save();
 
     // Setup Nodemailer transporter
     const transporter = nodemailer.createTransport({
@@ -27,7 +23,7 @@ router.post('/', async (req, res) => {
     // Configure email options
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'harshvardhanjha338@gmail.com', // Your receiving email address
+      to: process.env.EMAIL_USER, // Your receiving email address
       replyTo: email,
       subject: `Portfolio Contact: Message from ${name}`,
       text: `You have a new message from your portfolio website.\n\nName: ${name}\nEmail: ${email}\nMessage:\n${message}`,
@@ -42,38 +38,16 @@ router.post('/', async (req, res) => {
     };
 
     // Send the email
-    try {
-      await transporter.sendMail(mailOptions);
-      console.log('✅ Email sent successfully');
-    } catch (mailError) {
-      console.error('❌ Email sending failed:', mailError);
-      // We don't return an error to the frontend if the email fails, 
-      // as long as the message was successfully saved to the database.
-    }
+    await transporter.sendMail(mailOptions);
+    console.log('✅ Email sent successfully via Nodemailer');
 
     res.status(201).json({
       success: true,
-      message: 'Message received successfully!',
-      data: { id: contact._id },
+      message: 'Message sent successfully!',
     });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      const errors = Object.values(err.errors).map(e => e.message);
-      return res.status(400).json({ error: errors.join(', ') });
-    }
-    console.error('Contact save error:', err);
-    res.status(500).json({ error: 'Server error. Please try again later.' });
-  }
-});
-
-// GET /api/contact - Retrieve all messages (admin)
-router.get('/', async (req, res) => {
-  try {
-    const messages = await Contact.find().sort({ createdAt: -1 });
-    res.json({ success: true, data: messages });
-  } catch (err) {
-    console.error('Contact fetch error:', err);
-    res.status(500).json({ error: 'Server error' });
+    console.error('Email sending error:', err);
+    res.status(500).json({ error: 'Failed to send email. Please check your credentials.' });
   }
 });
 
