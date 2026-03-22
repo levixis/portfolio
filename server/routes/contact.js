@@ -23,7 +23,9 @@ router.post('/', async (req, res) => {
       },
       tls: {
         rejectUnauthorized: false
-      }
+      },
+      // IMPORTANT FOR RENDER: Force IPv4. Render's IPv6 routing often fails to Gmail.
+      family: 4 
     });
 
     // Configure email options
