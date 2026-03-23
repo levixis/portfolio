@@ -175,6 +175,11 @@ export default function Hero() {
                 <span>Get In Touch</span>
               </a>
             </Magnetic>
+            <Magnetic>
+              <a href="/CV_202602201036247214_12306555.pdf" download="Harshvardhan_CV.pdf" className="btn btn-primary">
+                <span>Download CV</span>
+              </a>
+            </Magnetic>
           </div>
           <div className="hero-stats">
             <div className="stat">
