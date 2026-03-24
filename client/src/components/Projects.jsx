@@ -31,6 +31,7 @@ const projects = [
     highlights: ['Precise billable hour logging system', 'Reduced manual invoicing errors by 90%'],
     tech: ['React', 'Node.js', 'Express', 'MongoDB'],
     github: 'https://github.com/levixis/FreelanceFlow',
+    live: 'https://freelance-flow-live.vercel.app/',
     stats: [
       { number: '90%', label: 'Error Reduction', sub: 'In manual invoicing' },
       { number: '3x', label: 'Faster', sub: 'Invoice generation' },
